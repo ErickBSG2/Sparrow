@@ -5,10 +5,14 @@
  */
 package sparrow;
 
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -54,9 +58,11 @@ public class Inventario extends javax.swing.JFrame {
         txtPrecioV = new javax.swing.JTextField();
         txtProveedor = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtArea = new javax.swing.JTextArea();
         btnCargar = new javax.swing.JButton();
+        lblImagen = new javax.swing.JLabel();
+        txtDirecccion = new javax.swing.JTextField();
+        lblDireccion = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
         btnCerrar = new javax.swing.JButton();
@@ -107,16 +113,50 @@ public class Inventario extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(102, 255, 204));
 
-        txtArea.setColumns(20);
-        txtArea.setRows(5);
-        jScrollPane1.setViewportView(txtArea);
-
         btnCargar.setText("CARGAR IMAGEN");
         btnCargar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCargarActionPerformed(evt);
             }
         });
+
+        lblDireccion.setText("Nombre De La Imagen:");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(lblDireccion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                                .addComponent(txtDirecccion, javax.swing.GroupLayout.Alignment.LEADING)))))
+                .addContainerGap(39, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnCargar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addComponent(lblDireccion)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtDirecccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
+        );
+
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, 300, 320));
+
+        jPanel4.setBackground(new java.awt.Color(102, 255, 204));
 
         btnGuardar.setText("GUARDAR");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -126,6 +166,11 @@ public class Inventario extends javax.swing.JFrame {
         });
 
         btnBorrar.setText("BORRAR");
+        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarActionPerformed(evt);
+            }
+        });
 
         btnCerrar.setText("CERRAR");
         btnCerrar.addActionListener(new java.awt.event.ActionListener() {
@@ -134,45 +179,31 @@ public class Inventario extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(btnGuardar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBorrar)
-                        .addGap(11, 11, 11)
-                        .addComponent(btnCerrar)
-                        .addGap(0, 7, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(84, 84, 84)
-                .addComponent(btnCargar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnGuardar)
+                .addGap(18, 18, 18)
+                .addComponent(btnBorrar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCerrar)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(btnCargar)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnBorrar)
                     .addComponent(btnCerrar))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, 300, 360));
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 330, 300, 60));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -196,24 +227,76 @@ public class Inventario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        
+           JFileChooser archivo = new JFileChooser();
+           
+           FileNameExtensionFilter filtro =
+                   new FileNameExtensionFilter("Archivo De Texto", "txt");
+           
+           archivo.setFileFilter(filtro);
+           int opcion = archivo.showSaveDialog(this);
+           
+           if(opcion == JFileChooser.APPROVE_OPTION){
+               try{
+                   BufferedWriter bw = new BufferedWriter(new FileWriter(archivo.getSelectedFile().getAbsolutePath()));
+                   bw.write(txtCodigo.getText());
+                   bw.write(txtNombre.getText());
+                   bw.write(txtDescripcion.getText());
+                   bw.write(txtCategoria.getText());
+                   bw.write(txtCantidad.getText());
+                   bw.write(txtPrecioC.getText());
+                   bw.write(txtPrecioV.getText());
+                   bw.write(txtProveedor.getText());
+                   bw.write(txtDirecccion.getText());
+                   bw.close();
+               }catch(IOException e){
+                    e.printStackTrace();
     }//GEN-LAST:event_btnGuardarActionPerformed
-
+           }
+    }
+    File fichero;
+    
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
-        
+           int resultado; 
            JFileChooser archivo = new JFileChooser();
            
            FileNameExtensionFilter filtro =
                    new FileNameExtensionFilter("Imagenes", "png");
            
            archivo.setFileFilter(filtro);
-           int opcion = archivo.showOpenDialog(this);
            
-           if(opcion == JFileChooser.APPROVE_OPTION){
-               lblCantidad.setIcon(new ImageIcon());
-            
+           resultado = archivo.showOpenDialog(null);
+           
+           if(resultado == JFileChooser.APPROVE_OPTION){
+               fichero = archivo.getSelectedFile();
+               
+               try{
+                   ImageIcon icon = new ImageIcon(fichero.toString());
+                   
+                   Icon icono = new ImageIcon(icon.getImage());
+                   
+                   lblImagen.setText(null);
+                   
+                   lblImagen.setIcon(icono);
+               }catch(Exception ex){
+                   JOptionPane.showMessageDialog(null,"Error Abriendo La Imagen " + ex);
+               }
+               
+            txtDirecccion.setText(archivo.getSelectedFile().getName());
     }                                        
     }//GEN-LAST:event_btnCargarActionPerformed
+
+    private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+                   txtCodigo.setText("");
+                   txtNombre.setText("");
+                   txtDescripcion.setText("");
+                   txtCategoria.setText("");
+                   txtCantidad.setText("");
+                   txtPrecioC.setText("");
+                   txtPrecioV.setText("");
+                   txtProveedor.setText("");
+                   txtDirecccion.setText("");
+                   lblImagen.setIcon(null);
+    }//GEN-LAST:event_btnBorrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -259,20 +342,22 @@ public class Inventario extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel lblCantidad;
     private javax.swing.JLabel lblCategoria;
     private javax.swing.JLabel lblCodigo;
     private javax.swing.JLabel lblDescripcion;
+    private javax.swing.JLabel lblDireccion;
+    private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblPrecioC;
     private javax.swing.JLabel lblPrecioV;
     private javax.swing.JLabel lblProveedor;
-    private javax.swing.JTextArea txtArea;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtCategoria;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtDescripcion;
+    private javax.swing.JTextField txtDirecccion;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPrecioC;
     private javax.swing.JTextField txtPrecioV;
