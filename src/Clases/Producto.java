@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Clases;
 
 import Conexion.Conexion;
@@ -23,8 +18,13 @@ public class Producto {
     private double precioC;
     private double precioV;
     private int cveProveedor;
+
+    private ResultSet rs;
+    private String consulta;
+
     Conexion conn = new Conexion();
 
+    //ESTE ES EL CONSTRUCTOR
     public Producto() {
 
     }
@@ -93,17 +93,34 @@ public class Producto {
         cveProveedor = cveProv;
     }
 
-    public void buscarProducto(String cod) {
-        ResultSet rs;
-        String consulta = "SELECT * FROM " + "producto WHERE codigo =" + cod;
-        rs = conn.busqueda(consulta);
+    public int buscarProducto(String cod) {
 
-        try {
-            while (rs.next()) {
+        int ban = 0;
 
+        consulta = "SELECT 1 FROM Producto WHERE codigo=" + cod;
+
+        if (conn.siExiste(consulta)) {
+            consulta = "SELECT nombre, descripcion, cveCategoria, cantidad, precioCompra, "
+                    + "precioVenta, cveProveedor " + " FROM Producto WHERE codigo=" + cod;
+            rs = conn.busqueda(consulta);
+
+            try {
+                while (rs.next()) {
+                    this.setNombre(rs.getString(1));
+                    this.setDescripcion(rs.getString(2));
+                    this.setCveCategoria(rs.getInt(3));
+                    this.setCantidad(rs.getInt(4));
+                    this.setPrecioC(rs.getDouble(5));
+                    this.setPrecioV(rs.getDouble(6));
+                    this.setCveProveedor(rs.getInt(7));
+                }
+                ban = 1;
+            } catch (SQLException e) {
+                System.out.println("Error: " + e.getMessage());
             }
-        } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
         }
+        return ban;
     }
 }
+
+

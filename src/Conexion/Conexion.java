@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Conexion;
 
 import java.sql.*;
@@ -19,24 +14,20 @@ public class Conexion {
 
     public Connection ConectarBD() {
         try {
-            Class.forName("com.mysql.jdbc.driver");
-            con = DriverManager.getConnection("jdbc://localhost/tic03", "root", "root");
-        } catch (ClassNotFoundException error) {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/Sparrow", "root", "2JgF4hucHNRBHTeG");
+        } catch (ClassNotFoundException | SQLException error) {
             System.out.println("Error En La Conexion: " + error);
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
         }
         return con;
     }
 
     public void Conectar() {
         try {
-            Class.forName("com.mysql.jdbc.driver");
-            con = DriverManager.getConnection("jdbc://localhost/tic03", "root", "root");
-        } catch (ClassNotFoundException error) {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/Sparrow", "root", "2JgF4hucHNRBHTeG");
+        } catch (ClassNotFoundException | SQLException error) {
             System.out.println("Error En La Conexion: " + error);
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
         }
     }
 
@@ -75,4 +66,20 @@ public class Conexion {
         return resultado;
     }
 
+    public boolean siExiste(String consulta) {
+        boolean existeRegistro = false;
+        Conectar();
+        try (PreparedStatement ps = con.prepareStatement(consulta)) {
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                if (rs.getRow() > 0) {
+                    existeRegistro = true;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error En La Consulta: " + e.getMessage());
+        }
+        return existeRegistro;
+    }
 }
